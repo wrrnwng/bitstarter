@@ -24,7 +24,7 @@ var fs = require('fs');
 var program = require('commander');
 var cheerio = require('cheerio');
 var HTMLFILE_DEFAULT = "index.html";
-var CHECKFILE_DEFAULT = "checks.json";
+var CHECKSFILE_DEFAULT = "checks.json";
 
 var assertFileExists = function(infile) {
     var instr = infile.toString();
@@ -43,12 +43,12 @@ var loadChecks = function(checksfile) {
     return JSON.parse(fs.readFileSync(checksfile));
 };
 
-var checkHtmlFile = function(htmlfile, checkfile) {
+var checkHtmlFile = function(htmlfile, checksfile) {
     $ = cheerioHtmlFile(htmlfile);
     var checks = loadChecks(checksfile).sort();
     var out = {};
     for(var ii in checks) {
-	var present = $(check[ii]).length > 0;
+	var present = $(checks[ii]).length > 0;
 	out[checks[ii]] = present;
     }
     return out;
